@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Customize</title>
+  <style>
+    :root {
+      --bg: #2a2433; --surface: #352d42; --raised: #443b57; --deep: #1f1a29;
+      --line: rgba(255,255,255,.09); --text: #f3eefb; --muted: rgba(243,238,251,.58);
+      --accent: #8e6bd8; --danger: #ffb4ab; --ok: #a5d6a7;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+      font: 14px/1.4 "Segoe UI", system-ui, Arial, sans-serif; }
+    body { display: flex; flex-direction: column; }
+
+    header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 4px; }
+    header .title { font-size: 16px; font-weight: 600; }
+    .x { background: none; border: 0; color: var(--muted); font-size: 16px; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+    .x:hover { color: var(--text); background: var(--surface); }
+
+    .tabs { display: flex; gap: 2px; padding: 6px 12px 0; border-bottom: 1px solid var(--line); }
+    .tab { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted);
+      padding: 8px 10px; font-size: 13px; cursor: pointer; margin-bottom: -1px; }
+    .tab:hover { color: var(--text); }
+    .tab.on { color: var(--text); border-bottom-color: var(--accent); }
+
+    main { flex: 1; overflow-y: auto; padding: 16px; }
+    section > * + * { margin-top: 18px; }
+    h4 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+    .hint { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
+
+    .seg { display: flex; gap: 2px; background: var(--deep); border-radius: 10px; padding: 3px; }
+    .seg button { flex: 1; background: none; border: 0; color: var(--muted); padding: 7px 0;
+      border-radius: 8px; font-size: 13px; cursor: pointer; }
+    .seg button:hover { color: var(--text); }
+    .seg button.on { background: var(--raised); color: var(--text); }
+
+    .field { display: flex; gap: 8px; align-items: center; }
+    input[type=text], input[type=number] { flex: 1; min-width: 0; background: var(--deep);
+      border: 1px solid var(--line); border-radius: 8px; color: var(--text); padding: 9px 10px; font-size: 13px; }
+    input[type=number] { flex: none; width: 76px; }
+    input:focus-visible, button:focus-visible, .pick:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+    input[type=color] { width: 48px; height: 38px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 8px; }
+
+    .btn { background: var(--accent); border: 0; color: #fff; border-radius: 8px; padding: 9px 14px;
+      font-size: 13px; cursor: pointer; white-space: nowrap; }
+    .btn:hover { filter: brightness(1.1); }
+    .btn.ghost { background: var(--surface); }
+    .btn.ghost:hover { background: var(--raised); filter: none; }
+    .btn.wide { width: 100%; }
+
+    .pick { display: block; text-align: center; border: 1px dashed rgba(255,255,255,.25);
+      border-radius: 10px; padding: 18px 10px; cursor: pointer; font-size: 13px; }
+    .pick:hover { background: var(--surface); }
+    .pick small { display: block; color: var(--muted); margin-top: 4px; font-size: 12px; }
+    .pick input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+    .slider { display: flex; align-items: center; gap: 10px; }
+    .slider .name { width: 56px; color: var(--muted); font-size: 13px; }
+    .slider input { flex: 1; accent-color: var(--accent); }
+    .slider output { width: 40px; text-align: right; font-size: 12px; color: var(--muted); }
+    .slider + .slider { margin-top: 10px; }
+
+    .switch-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .switch-row .label { font-size: 13px; }
+    .switch-row .label small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .switch { position: relative; width: 38px; height: 22px; flex: none; }
+    .switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+    .switch i { position: absolute; inset: 0; background: var(--raised); border-radius: 11px; transition: background .15s; }
+    .switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px;
+      border-radius: 50%; background: #fff; transition: transform .15s; }
+    .switch input:checked + i { background: var(--accent); }
+    .switch input:checked + i::after { transform: translateX(16px); }
+    .switch input:focus-visible + i { outline: 2px solid #fff; outline-offset: 2px; }
+
+    .opts { display: flex; flex-direction: column; gap: 6px; }
+    .opt { display: flex; align-items: center; justify-content: space-between; width: 100%;
+      background: var(--surface); border: 1.5px solid transparent; border-radius: 10px;
+      padding: 10px 12px; color: var(--text); font-size: 13px; cursor: pointer; text-align: left; }
+    .opt:hover { background: var(--raised); }
+    .opt.on { border-color: var(--accent); background: var(--raised); }
+    .opt .sample { font-size: 20px; font-weight: 500; letter-spacing: -.03em; color: #d3bcfd;
+      font-variant-numeric: tabular-nums; }
+    .opt .sample.dim { opacity: .3; }
+    .opt .sample.none { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+
+    .slide-row { display: flex; align-items: center; gap: 6px; background: var(--surface);
+      border-radius: 10px; padding: 6px 6px 6px 10px; margin-bottom: 6px; font-size: 13px; }
+    .slide-row .num { color: var(--muted); width: 16px; font-size: 12px; }
+    .slide-row .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .slide-row .tag { color: var(--muted); font-size: 11px; }
+    .ib { background: none; border: 0; color: var(--text); cursor: pointer; font-size: 13px; padding: 4px 6px; border-radius: 6px; }
+    .ib:hover:not(:disabled) { background: var(--raised); }
+    .ib:disabled { opacity: .25; cursor: default; }
+    #slides:empty::before { content: "No slides yet. Add some below."; display: block; color: var(--muted);
+      font-size: 12px; padding: 12px; border: 1px dashed var(--line); border-radius: 10px; text-align: center; }
+    .stack > * + * { margin-top: 12px; }
+    .secs { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 10px 16px; border-top: 1px solid var(--line); min-height: 44px; }
+    #msg { flex: 1; font-size: 12px; color: var(--danger); }
+    #msg.ok { color: var(--ok); }
+    .linkbtn { background: none; border: 0; color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; }
+    .linkbtn:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">Customize</div>
+    <button class="x" id="close" aria-label="Close">✕</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab on" data-tab="bg">Background</button>
+    <button class="tab" data-tab="page">Page</button>
+  </nav>
+
+  <main>
+    <!-- ================= Background ================= -->
+    <section id="tab-bg">
+      <div>
+        <h4>Type</h4>
+        <div class="seg">
+          <button class="viewbtn" data-view="single">Single</button>
+          <button class="viewbtn" data-view="slideshow">Slideshow</button>
+        </div>
+      </div>
+
+      <!-- Single: colour, link or upload -->
+      <div id="view-single">
+        <h4>Source</h4>
+        <div class="seg">
+          <button class="srcbtn on" data-src="color">Colour</button>
+          <button class="srcbtn" data-src="url">Link</button>
+          <button class="srcbtn" data-src="file">Upload</button>
+        </div>
+
+        <div id="src-color" style="margin-top:12px">
+          <div class="field">
+            <input type="color" id="color">
+            <button class="btn" id="usecolor">Use this colour</button>
+          </div>
+        </div>
+        <div id="src-url" style="margin-top:12px" hidden>
+          <div class="field">
+            <input type="text" id="url" placeholder="https://…/cool.gif">
+            <button class="btn" id="useurl">Apply</button>
+          </div>
+          <p class="hint">Use a direct link to an image, GIF or MP4.</p>
+        </div>
+        <div id="src-file" style="margin-top:12px" hidden>
+          <label class="pick">
+            Choose an image, GIF or video
+            <small>MP4, WebM, GIF or images up to 200 MB</small>
+            <input type="file" id="file" accept="image/*,video/mp4,video/webm">
+          </label>
+        </div>
+      </div>
+
+      <!-- Slideshow: several images, GIFs or videos -->
+      <div id="view-show" class="stack" hidden>
+        <div>
+          <h4>Slides (play in order, then start over)</h4>
+          <div id="slides"></div>
+        </div>
+        <div>
+          <label class="pick">
+            Add images, GIFs or videos
+            <small>You can pick several at once</small>
+            <input type="file" id="slidefiles" accept="image/*,video/mp4,video/webm" multiple>
+          </label>
+          <div class="field" style="margin-top:8px">
+            <input type="text" id="slideurl" placeholder="Or paste a direct link">
+            <button class="btn ghost" id="addslideurl">Add</button>
+          </div>
+        </div>
+        <div class="secs">
+          <span>Show each image or GIF for</span>
+          <input type="number" id="slidesecs" min="2" max="600">
+          <span>seconds</span>
+        </div>
+        <p class="hint" style="margin-top:-6px">Videos play until they end.</p>
+      </div>
+
+      <!-- Size and darken: shared, always at the bottom -->
+      <div id="size-group" class="stack">
+        <h4>Size</h4>
+        <div class="seg">
+          <button class="fitbtn" data-fit="cover">Fill</button>
+          <button class="fitbtn" data-fit="contain">Fit inside</button>
+          <button class="fitbtn" data-fit="stretch">Stretch</button>
+        </div>
+        <div class="slider">
+          <span class="name">Zoom</span><input type="range" id="zoom" min="100" max="400" step="5"><output id="zoomval">100%</output>
+        </div>
+        <button class="btn ghost wide" id="move">✋ Drag to choose what part shows</button>
+      </div>
+
+      <div>
+        <h4>Darken</h4>
+        <div class="slider">
+          <span class="name">Amount</span><input type="range" id="dim" min="0" max="80" step="5"><output id="dimval">0%</output>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Page ================= -->
+    <section id="tab-page" hidden>
+      <div>
+        <h4>Google (Above the search bar)</h4>
+        <div class="opts" id="logoopts">
+          <button class="opt" data-mode="logo"><span>Google logo</span><span class="sample">Google</span></button>
+          <button class="opt" data-mode="hidden"><span>Hidden</span><span class="sample none">nothing</span></button>
+          <button class="opt" data-mode="glass"><span>Translucent logo</span><span class="sample dim">Google</span></button>
+          <button class="opt" data-mode="time"><span>Time</span><span class="sample clock">12:00</span></button>
+          <button class="opt" data-mode="timeglass"><span>Translucent time</span><span class="sample clock dim">12:00</span></button>
+        </div>
+      </div>
+
+      <div class="switch-row" id="footer-sec">
+        <div class="label">Hide the bottom bar
+          <small>Removes Canada, Privacy, Terms… on google.com</small>
+        </div>
+        <label class="switch"><input type="checkbox" id="footer"><i></i></label>
+      </div>
+    </section>
+  </main>
+
+  <div class="foot">
+    <div id="msg"></div>
+    <button class="linkbtn" id="reset">Reset everything</button>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>
