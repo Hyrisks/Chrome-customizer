@@ -49,10 +49,7 @@ It runs in two places:
 
 You don't need the Chrome Web Store. It loads straight from the folder.
 
-1. **Download** this repo (green **Code** button → **Download ZIP**) and unzip it, or run:
-   ```bash
-   git clone https://github.com/<your-username>/<your-repo>.git
-   ```
+1. **Download** it from releases and unzip it.
 2. Open `chrome://extensions` in Chrome.
 3. Turn on **Developer mode** (top right).
 4. Click **Load unpacked** and select the folder that contains `manifest.json`.
