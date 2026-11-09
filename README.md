@@ -8,7 +8,6 @@
 
 <p align="center">
   <img alt="Manifest V3" src="https://img.shields.io/badge/Manifest-V3-8e6bd8?style=for-the-badge">
-  <img alt="Chrome" src="https://img.shields.io/badge/Chrome-extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white">
   <img alt="No tracking" src="https://img.shields.io/badge/Tracking-none-2e7d32?style=for-the-badge">
 </p>
 
