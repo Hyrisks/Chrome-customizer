@@ -54,6 +54,7 @@ You don't need the Chrome Web Store. It loads straight from the folder.
 3. Turn on **Developer mode** (top right).
 4. Click **Load unpacked** and select the folder that contains `manifest.json`.
 5. Open a new tab. Chrome may ask if you want to keep the extension's new tab page. Choose **Keep it**.
+6. Then there is going to be a footer at the bottom to remove it right-click it, then click on hide footer.
 
 > **Updating?** Replace the files in your folder, then click the reload arrow on the extension at `chrome://extensions`. Your links, background and slideshow are kept.
 
