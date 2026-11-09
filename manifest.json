@@ -3,6 +3,11 @@
   "name": "Chrome Customizer",
   "version": "1.4",
   "description": "Customize Google and your new tab: backgrounds, slideshow, quick links, and a clock above the search bar.",
+   "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "192": "icon192.png"
+  },
   "permissions": [
     "storage",
     "unlimitedStorage"
